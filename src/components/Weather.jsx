@@ -5,6 +5,7 @@ import pinkSearchIcon from '../assets/pinkSearchIcon.png'
 const Weather = () => {
   const inputRef = useRef();
   const [weatherData, setWeatherData] = useState(null);
+  const [cityImages, setCityImages] = useState([]);
 
   const allIcons = {
     "01d": pinkSearchIcon,
@@ -24,68 +25,108 @@ const Weather = () => {
   }
 
   const search = async (city) => {
-    if (city==""){
+    if (city === "") {
       alert("Enter city name")
-      return;
+      return
     }
     try {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data);
+      const response = await fetch(url)
+      const data = await response.json()
+      console.log(data)
 
       if (data.cod !== 200) {
-        setWeatherData(null); // city not found
-        return;
+        setWeatherData(null) // city not found
+        return
       }
 
-      const icon = allIcons[data.weather[0].icon] || pinkSearchIcon;
+      const icon = allIcons[data.weather[0].icon] || pinkSearchIcon
       setWeatherData({
         humidity: data.main.humidity,
         windSpeed: data.wind.speed,
         temperature: Math.floor(data.main.temp),
         location: data.name,
-        icon: icon
+        icon: icon,
       })
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
+    fetchCityImages(city);
   }
 
   useEffect(() => {
-    search("New York");
+    search("New York")
   }, [])
 
+  const fetchCityImages = async (city) => {
+    try {
+      const url = `https://api.unsplash.com/search/photos?query=${city}&per_page=9&client_id=${import.meta.env.VITE_UNSPLASH_KEY}`;
+      const response = await fetch(url);
+      const data = await response.json();
+  
+      if (data.results.length > 0) {
+        const shuffled = data.results.sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 4).map(img => img.urls.small);
+        setCityImages(selected);
+      } else {
+        setCityImages([]);
+      }
+    } catch (err) {
+      console.error(err);
+      setCityImages([]);
+    }
+  };  
+
   return (
-    <div className='weather'>
+    <div className='weather-app'>
+      {/* Search bar at the top */}
       <div className="search-bar">
         <input ref={inputRef} type="text" placeholder="Search" />
-        <img src={pinkSearchIcon} alt="search" onClick={() => search(inputRef.current.value)} />
+        <img 
+          src={pinkSearchIcon} 
+          alt="search" 
+          onClick={() => search(inputRef.current.value)} 
+        />
       </div>
 
-      {weatherData && (
-        <>
-          <img src={weatherData.icon} alt="" className='weather-icon' />
-          <p className='temperature'>{weatherData.temperature}°C</p>
-          <p className='location'>{weatherData.location}</p>
-          <div className="weather-data">
-            <div className="col">
-              <img src={pinkSearchIcon} alt="" />
-              <div>
-                <p>{weatherData.humidity}%</p>
-                <span>Humidity</span>
+      {/* Weather + Collage side by side */}
+      <div className="weather-layout">
+        {/* Weather card */}
+        <div className='weather'>
+          {weatherData && (
+            <>
+              <img src={weatherData.icon} alt="" className='weather-icon' />
+              <p className='temperature'>{weatherData.temperature}°C</p>
+              <p className='location'>{weatherData.location}</p>
+              <div className="weather-data">
+                <div className="col">
+                  <img src={pinkSearchIcon} alt="" />
+                  <div>
+                    <p>{weatherData.humidity}%</p>
+                    <span>Humidity</span>
+                  </div>
+                </div>
+                <div className="col">
+                  <img src={pinkSearchIcon} alt="" />
+                  <div>
+                    <p>{weatherData.windSpeed} m/s</p>
+                    <span>Wind Speed</span>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="col">
-              <img src={pinkSearchIcon} alt="" />
-              <div>
-                <p>{weatherData.windSpeed} m/s</p>
-                <span>Wind Speed</span>
-              </div>
-            </div>
+            </>
+          )}
+        </div>
+
+        {/* City collage */}
+        {cityImages.length > 0 && (
+          <div className="city-collage">
+            {cityImages.map((img, index) => (
+              <img key={index} src={img} alt="City" className="collage-img" />
+            ))}
           </div>
-        </>
-      )}
+        )}
+      </div>
     </div>
   )
 }
