@@ -10,7 +10,7 @@ const Weather = () => {
   const [forecastData, setForecastData] = useState(null);
   const [localTime, setLocalTime] = useState(null);
   const [timezone, setTimezone] = useState(null);
-  const [sunTimes, setSunTimes] = useState({sunrise: null, sunset: null});
+  const [sunTimes, setSunTimes] = useState({ sunrise: null, sunset: null });
 
   const search = async (city) => {
     if (city === "") { alert("Enter city name"); return; }
@@ -31,8 +31,7 @@ const Weather = () => {
         icon: icon,
       });
 
-      setTimezone(data.timezone);
-      updateLocalTime(data.timezone);
+      setTimezone(data.timezone); // <-- triggers local time effect below
       setSunTimes({
         sunrise: data.sys.sunrise,
         sunset: data.sys.sunset,
@@ -66,16 +65,21 @@ const Weather = () => {
     } catch (err) { console.error(err); setCityImages([]); }
   };
 
-  const updateLocalTime = (tzOffset) => {
+  // ✅ Effect to update local time when timezone changes
+  useEffect(() => {
+    if (timezone === null) return;
+
     const update = () => {
       const utc = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60000);
-      const local = new Date(utc.getTime() + tzOffset * 1000);
+      const local = new Date(utc.getTime() + timezone * 1000);
       setLocalTime(local.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
     };
-    update();
+
+    update(); // run once immediately
     const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
-  };
+
+    return () => clearInterval(interval); // cleanup on timezone change/unmount
+  }, [timezone]);
 
   useEffect(() => { search("New York"); }, []);
 
@@ -88,9 +92,9 @@ const Weather = () => {
   })) || [];
 
   const formatTime = (timestamp) => {
-    if (!timestamp) return '';
+    if (!timestamp || timezone === null) return '';
     const date = new Date((timestamp + timezone) * 1000);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' });
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
   return (
@@ -158,24 +162,46 @@ const Weather = () => {
           </ResponsiveContainer>
 
           <h3>Humidity</h3>
-          <ResponsiveContainer width="100%" height={60}>
+          <ResponsiveContainer width="100%" height={150}>
             <BarChart data={tempData}>
-              <XAxis dataKey="time" hide />
-              <YAxis hide />
+              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+              <XAxis dataKey="time" />
+              <YAxis 
+  tick={{ dx: 5 }}  // ⬅️ move tick text 5px right
+  label={{ 
+    value: '(%)', 
+    angle: -90, 
+    position: 'outsideLeft',
+    offset: -20
+  }}
+/>
+
+
               <Tooltip />
               <Bar dataKey="humidity" fill="#8884d8" />
             </BarChart>
           </ResponsiveContainer>
 
-          <h3>Wind Speed</h3>
-          <ResponsiveContainer width="100%" height={60}>
-            <BarChart data={tempData}>
-              <XAxis dataKey="time" hide />
-              <YAxis hide />
-              <Tooltip />
-              <Bar dataKey="wind" fill="#82ca9d" />
-            </BarChart>
-          </ResponsiveContainer>
+
+<h3>Wind Speed</h3>
+<ResponsiveContainer width="100%" height={150}>
+  <BarChart data={tempData}>
+    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+    <XAxis dataKey="time" />
+    <YAxis 
+  label={{ 
+    value: 'Speed (m/s)', 
+    angle: -90, 
+    position: 'outsideLeft',   // ⬅️ move label outside
+    offset: 60 
+  }} 
+/>
+
+    <Tooltip />
+    <Bar dataKey="wind" fill="#82ca9d" />
+  </BarChart>
+</ResponsiveContainer>
+
         </div>
       </div>
     </div>
