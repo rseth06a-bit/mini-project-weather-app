@@ -12,6 +12,9 @@ const Weather = () => {
   const [timezone, setTimezone] = useState(null);
   const [sunTimes, setSunTimes] = useState({ sunrise: null, sunset: null });
 
+  
+  
+
   const search = async (city) => {
     if (city === "") { alert("Enter city name"); return; }
 
@@ -26,10 +29,12 @@ const Weather = () => {
       setWeatherData({
         humidity: data.main.humidity,
         windSpeed: data.wind.speed,
+        windDeg: data.wind.deg,   // ⬅️ add this
         temperature: Math.floor(data.main.temp),
         location: data.name,
         icon: icon,
       });
+      
 
       setTimezone(data.timezone); // <-- triggers local time effect below
       setSunTimes({
@@ -64,6 +69,59 @@ const Weather = () => {
       } else { setCityImages([]); }
     } catch (err) { console.error(err); setCityImages([]); }
   };
+
+  const Compass = ({ degrees }) => {
+    return (
+      <div style={{
+        width: '120px',
+        height: '120px',
+        border: '4px solid #333',
+        borderRadius: '50%',
+        position: 'relative',
+        margin: '0 auto',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        {/* N, E, S, W labels */}
+        <span style={{ position: 'absolute', top: '5px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px' }}>N</span>
+        <span style={{ position: 'absolute', bottom: '5px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px' }}>S</span>
+        <span style={{ position: 'absolute', left: '5px', top: '50%', transform: 'translateY(-50%)', fontSize: '12px' }}>W</span>
+        <span style={{ position: 'absolute', right: '5px', top: '50%', transform: 'translateY(-50%)', fontSize: '12px' }}>E</span>
+  
+        {/* Needle */}
+        <div style={{
+          width: '4px',
+          height: '60%',
+          position: 'absolute',
+          transform: `rotate(${degrees}deg)`,
+          transformOrigin: '50% 50%',
+          transition: 'transform 0.5s ease-out',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}>
+          {/* North (red) */}
+          <div style={{
+            width: '0',
+            height: '0',
+            borderLeft: '8px solid transparent',
+            borderRight: '8px solid transparent',
+            borderBottom: '40px solid red',
+          }} />
+          {/* South (gray) */}
+          <div style={{
+            width: '0',
+            height: '0',
+            borderLeft: '8px solid transparent',
+            borderRight: '8px solid transparent',
+            borderTop: '40px solid gray',
+          }} />
+        </div>
+      </div>
+    );
+  };
+  
 
   // ✅ Effect to update local time when timezone changes
   useEffect(() => {
@@ -201,6 +259,12 @@ const Weather = () => {
     <Bar dataKey="wind" fill="#82ca9d" />
   </BarChart>
 </ResponsiveContainer>
+
+<h3>Wind Direction</h3>
+{weatherData?.windDeg !== undefined && (
+  <Compass degrees={weatherData.windDeg} />
+)}
+
 
         </div>
       </div>

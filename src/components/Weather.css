@@ -1,175 +1,174 @@
 /* Parent layout: weather card + collage */
 .weather-layout {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;   /* centers horizontally */
-    gap: 30px;
-    margin-top: 100px;         /* instead of absolute top */
-    width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;   /* centers horizontally */
+  gap: 30px;
+  margin-top: 100px;         /* instead of absolute top */
+  width: 100%;
 }
 
 
-  
-  /* Weather card */
-  /* Weather card */
+
+/* Weather card */
+/* Weather card */
 .weather {
-    width: 350px;
-    height: 450px;
-    padding: 40px;
-    border-radius: 10px;
-    background-image: linear-gradient(45deg, #2f4680, #500ae4);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-sizing: border-box;
-  
-    /* NEW: nudge card to the right */
-    margin-left: 80px;  
-  }
-  
-  
-  /* Search bar pinned top center */
-  .search-bar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-  }
-  
-  .search-bar input {
-    height: 50px;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    padding-left: 25px;
-    color: #626262;
-    background: #ebfffc;
-    font-size: 18px;
-  }
-  
-  .search-bar img {
-    width: 50px;
-    padding: 15px;
-    border-radius: 50%;
-    background: #ebfffc;
-    cursor: pointer;
-  }
-  
-  /* Collage box same size as weather card */
-  .city-collage {
-    width: 350px;   /* same as weather card */
-    height: 450px;  /* same as weather card */
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 2 columns */
-    grid-template-rows: 1fr 1fr;    /* 2 rows */
-    gap: 12px;
-    box-sizing: border-box;
-  }
-  
-  .collage-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
-  /* Weather card content */
-  .weather-icon {
-    width: 150px;
-    margin: 30px 0;
-  }
-  
-  .temperature {
-    color: #fff;
-    font-size: 80px;
-    line-height: 1;
-  }
-  
-  .location {
-    color: #fff;
-    font-size: 40px;
-  }
-  
-  .weather-data {
-    width: 100%;
-    margin-top: 40px;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .weather-data .col {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    font-size: 22px;
-  }
-  
-  .weather-data .col span {
-    display: block;
-    font-size: 16px;
-  }
-  
-  .weather-data .col img {
-    width: 26px;
-    margin-top: 10px;
-  }
-  .weather-icon {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    margin: 20px 0;
-  }
+  width: 350px;
+  height: 450px;
+  padding: 40px;
+  border-radius: 10px;
+  background-image: linear-gradient(45deg, #2f4680, #500ae4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
 
-  .weather-dashboard {
-    width: 400px;            /* wider than the weather card */
-    min-height: 450px;       /* ensures it’s at least card height */
-    padding: 25px 30px;
-    background: #f0f4ff;
-    border-radius: 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    font-family: 'Arial', sans-serif;
+  /* NEW: nudge card to the right */
+  margin-left: 80px;  
+}
 
-    /* push it further right */
-    margin-left: 40px;
+
+/* Search bar pinned top center */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.search-bar input {
+  height: 50px;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  padding-left: 25px;
+  color: #626262;
+  background: #ebfffc;
+  font-size: 18px;
+}
+
+.search-bar img {
+  width: 50px;
+  padding: 15px;
+  border-radius: 50%;
+  background: #ebfffc;
+  cursor: pointer;
+}
+
+/* Collage box same size as weather card */
+.city-collage {
+  width: 350px;   /* same as weather card */
+  height: 450px;  /* same as weather card */
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columns */
+  grid-template-rows: 1fr 1fr;    /* 2 rows */
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.collage-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Weather card content */
+.weather-icon {
+  width: 150px;
+  margin: 30px 0;
+}
+
+.temperature {
+  color: #fff;
+  font-size: 80px;
+  line-height: 1;
+}
+
+.location {
+  color: #fff;
+  font-size: 40px;
+}
+
+.weather-data {
+  width: 100%;
+  margin-top: 40px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-data .col {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 22px;
+}
+
+.weather-data .col span {
+  display: block;
+  font-size: 16px;
+}
+
+.weather-data .col img {
+  width: 26px;
+  margin-top: 10px;
+}
+.weather-icon {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin: 20px 0;
+}
+
+.weather-dashboard {
+  width: 400px;            /* wider than the weather card */
+  min-height: 450px;       /* ensures it’s at least card height */
+  padding: 25px 30px;
+  background: #f0f4ff;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: 'Arial', sans-serif;
+
+  /* push it further right */
+  margin-left: 40px;
 }
 
 
 
 .weather-dashboard h3 {
-    margin: 0;
-    font-size: 16px;
-    text-align: center;
-    color: #333;
+  margin: 0;
+  font-size: 16px;
+  text-align: center;
+  color: #333;
 }
 
 .weather-dashboard p, .weather-dashboard span {
-    text-align: center;
-    margin: 0;
-    font-size: 14px;
+  text-align: center;
+  margin: 0;
+  font-size: 14px;
 }
 
 .local-time {
-    font-size: 22px;
-    font-weight: bold;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 .forecast-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .recharts-tooltip-wrapper {
-    font-size: 12px !important;
+  font-size: 12px !important;
 }
 
 
-  
