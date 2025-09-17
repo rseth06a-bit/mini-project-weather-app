@@ -9,9 +9,10 @@
   }
   
   /* Weather card */
-  .weather {
-    width: 350px; /* fixed width */
-    height: 450px; /* fixed height to match collage */
+  /* Weather card */
+.weather {
+    width: 350px;
+    height: 450px;
     padding: 40px;
     border-radius: 10px;
     background-image: linear-gradient(45deg, #2f4680, #500ae4);
@@ -19,7 +20,11 @@
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
+  
+    /* NEW: nudge card to the right */
+    margin-left: 80px;  
   }
+  
   
   /* Search bar pinned top center */
   .search-bar {
@@ -111,4 +116,11 @@
     width: 26px;
     margin-top: 10px;
   }
+  .weather-icon {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin: 20px 0;
+  }
+
   
