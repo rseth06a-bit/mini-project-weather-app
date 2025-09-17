@@ -1,12 +1,13 @@
 /* Parent layout: weather card + collage */
 .weather-layout {
-    display: flex;
-    align-items: flex-start;
-    gap: 30px;
-    position: absolute;  /* controls overall placement */
-    top: 100px;
-    left: 40px;
-  }
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;   /* tighter spacing */
+  position: absolute;
+  top: 100px;
+  left: 40px;
+}
+
   
   /* Weather card */
   /* Weather card */
@@ -124,17 +125,22 @@
   }
 
   .weather-dashboard {
-    width: 220px;
-    min-height: 450px;
-    padding: 15px;
+    width: 400px;            /* wider than the weather card */
+    min-height: 450px;       /* ensures it’s at least card height */
+    padding: 25px 30px;
     background: #f0f4ff;
     border-radius: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 18px;
     font-family: 'Arial', sans-serif;
+
+    /* push it further right */
+    margin-left: 40px;
 }
+
+
 
 .weather-dashboard h3 {
     margin: 0;
