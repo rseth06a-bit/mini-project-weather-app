@@ -88,14 +88,24 @@
   margin-top: 40px;
   color: #fff;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around; /* evenly space columns */
 }
 
 .weather-data .col {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font-size: 22px;
+  flex-direction: column;   /* stack value above label */
+  align-items: center;      /* center horizontally */
+  text-align: center;
+}
+
+.weather-data .col .value {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.weather-data .col .label {
+  font-size: 14px;
+  opacity: 0.85;
 }
 
 .weather-data .col span {

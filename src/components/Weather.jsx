@@ -184,12 +184,12 @@ const Weather = () => {
               <p className='location'>{weatherData.location}</p>
               <div className="weather-data">
                 <div className="col">
-                  <p>{weatherData.humidity}%</p>
-                  <span>Humidity</span>
+                  <p className="value">{weatherData.humidity}%</p>
+                  <span className="label">Humidity</span>
                 </div>
                 <div className="col">
-                  <p>{weatherData.windSpeed} m/s</p>
-                  <span>Wind Speed</span>
+                  <p className="value">{weatherData.windSpeed} m/s</p>
+                  <span className="label">Wind Speed</span>
                 </div>
               </div>
             </>
