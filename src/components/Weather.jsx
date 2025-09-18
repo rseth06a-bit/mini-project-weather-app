@@ -29,14 +29,14 @@ const Weather = () => {
       setWeatherData({
         humidity: data.main.humidity,
         windSpeed: data.wind.speed,
-        windDeg: data.wind.deg,   // ⬅️ add this
+        windDeg: data.wind.deg,  
         temperature: Math.floor(data.main.temp),
         location: data.name,
         icon: icon,
       });
       
 
-      setTimezone(data.timezone); // <-- triggers local time effect below
+      setTimezone(data.timezone); 
       setSunTimes({
         sunrise: data.sys.sunrise,
         sunset: data.sys.sunset,
@@ -83,13 +83,13 @@ const Weather = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-        {/* N, E, S, W labels */}
+        {}
         <span style={{ position: 'absolute', top: '5px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px' }}>N</span>
         <span style={{ position: 'absolute', bottom: '5px', left: '50%', transform: 'translateX(-50%)', fontSize: '12px' }}>S</span>
         <span style={{ position: 'absolute', left: '5px', top: '50%', transform: 'translateY(-50%)', fontSize: '12px' }}>W</span>
         <span style={{ position: 'absolute', right: '5px', top: '50%', transform: 'translateY(-50%)', fontSize: '12px' }}>E</span>
   
-        {/* Needle */}
+        {}
         <div style={{
           width: '4px',
           height: '60%',
@@ -101,7 +101,7 @@ const Weather = () => {
           flexDirection: 'column',
           alignItems: 'center',
         }}>
-          {/* North (red) */}
+          {}
           <div style={{
             width: '0',
             height: '0',
@@ -109,7 +109,7 @@ const Weather = () => {
             borderRight: '8px solid transparent',
             borderBottom: '40px solid red',
           }} />
-          {/* South (gray) */}
+          {}
           <div style={{
             width: '0',
             height: '0',
@@ -123,7 +123,6 @@ const Weather = () => {
   };
   
 
-  // ✅ Effect to update local time when timezone changes
   useEffect(() => {
     if (timezone === null) return;
 
@@ -133,15 +132,14 @@ const Weather = () => {
       setLocalTime(local.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
     };
 
-    update(); // run once immediately
+    update(); 
     const interval = setInterval(update, 1000);
 
-    return () => clearInterval(interval); // cleanup on timezone change/unmount
+    return () => clearInterval(interval); 
   }, [timezone]);
 
   useEffect(() => { search("New York"); }, []);
 
-  // Prepare chart data
   const tempData = forecastData?.map(f => ({
     time: new Date(f.dt_txt).getHours() + ':00',
     temperature: Math.round(f.main.temp),
@@ -168,7 +166,7 @@ const Weather = () => {
       </div>
 
       <div className="weather-layout">
-        {/* City collage */}
+        {}
         {cityImages.length > 0 && (
           <div className="city-collage">
             {cityImages.map((img, idx) => (
@@ -177,7 +175,7 @@ const Weather = () => {
           </div>
         )}
 
-        {/* Weather card */}
+        {}
         <div className='weather'>
           {weatherData && (
             <>
@@ -198,7 +196,7 @@ const Weather = () => {
           )}
         </div>
 
-        {/* Dashboard */}
+        {}
         <div className="weather-dashboard">
           <h3>Local Time</h3>
           <p className="local-time">{localTime}</p>
@@ -225,7 +223,7 @@ const Weather = () => {
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <XAxis dataKey="time" />
               <YAxis 
-  tick={{ dx: 5 }}  // ⬅️ move tick text 5px right
+  tick={{ dx: 5 }}  
   label={{ 
     value: '(%)', 
     angle: -90, 
@@ -250,7 +248,7 @@ const Weather = () => {
   label={{ 
     value: 'Speed (m/s)', 
     angle: -90, 
-    position: 'outsideLeft',   // ⬅️ move label outside
+    position: 'outsideLeft',  
     offset: 60 
   }} 
 />
