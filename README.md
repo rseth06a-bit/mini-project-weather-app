@@ -1,4 +1,4 @@
-#Live Demo
+Live Demo
 - https://rseth06a-bit.github.io/mini-project-weather-app/ 
 
 # React + Vite
